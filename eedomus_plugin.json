@@ -1,0 +1,79 @@
+{
+	"plugin_id": "scorepres",
+	"name_fr": "scorePresence",
+	"icon": "scorepresence.png",
+	"version": "1.0",
+	"creation_date": "2019-03-11",
+	"modification_date": "2019-03-11",
+	"author": "Influman",
+	"description_fr": "Score de présence",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "",
+	"parameters": 
+	[
+		{
+			"parameter": "ZONE", 
+			"description": "Résidence",
+			"xtype": "textfield",
+			"default_value": "1",
+			"field": "width:50, allowBlank:true"
+        },
+		{
+			"parameter": "SENSOR1", 
+			"description": "Détecteur n°1",
+			"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?sensor_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: false"
+        },
+		{
+			"parameter": "SENSOR2", 
+			"description": "Détecteur n°2",
+			"xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?sensor_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+        }
+	 ],
+	"scripts":
+	[
+		{
+			"name": "scorepresence.php"
+		}
+	],
+	"devices":
+    [
+		{
+			"device_id": "score",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "scorePresence #plugin.parameters.ZONE",
+			"icon": "scorepresence.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.SENSOR1,plugin.parameters.SENSOR2",
+				"VAR2": "",
+				"VAR3": "5,30",
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=scorepresence.php&action=getstatus&sensors=[VAR1]&devices=[VAR2]&param=[VAR3]&zone=plugin.parameters.ZONE",
+				"RAW_XPATH": "/SCOREPRESENCE/STATUS",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "-48", "description": ">=48h", "icon": "absence3.png"},
+				{ "value": "-24", "description": ">=24h", "icon": "absence2.png"},
+				{ "value": "-12", "description": ">=12h", "icon": "absence1.png"},
+				{ "value": "0", "description": "0", "icon": "scoreneutre.png"},
+				{ "value": "5", "description": "5", "icon": "presence05.png"},
+				{ "value": "10", "description": "10", "icon": "presence1.png"},
+				{ "value": "15", "description": "15", "icon": "presence15.png"},
+				{ "value": "20", "description": "20", "icon": "presence2.png"},
+				{ "value": "25", "description": "25", "icon": "presence25.png"},
+				{ "value": "30", "description": "30", "icon": "presence3.png"},
+				{ "value": "100", "description": "100", "icon": "presencemax.png"}
+			]
+		}
+	]
+}
